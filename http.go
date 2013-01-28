@@ -30,7 +30,7 @@ func AssetHandler(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(w, "")
 	case "/assets/application.css":
 		w.Header().Set("Content-Type", "text/css")
-		fmt.Fprint(w, "")
+		fmt.Fprint(w, APPLICATIONCSS)
 	default:
 		w.WriteHeader(404)
 	}
@@ -38,7 +38,7 @@ func AssetHandler(w http.ResponseWriter, req *http.Request) {
 
 func RootHandler(w http.ResponseWriter, req *http.Request) {
 	navbar := fmt.Sprintf(NAVBAR, NavbarItems("One", "Two"))
-	content := fmt.Sprintf(CONTENT, "Contect Here")
+	content := fmt.Sprintf(CONTENT, "Title", LeftBar(), ContentArea())
 	fmt.Fprintf(w, BASE, navbar, content)
 }
 
@@ -47,4 +47,19 @@ func NavbarItems(items ...string) (markedUpItems string) {
 		markedUpItems += fmt.Sprintf(NAVBARITEM, html.EscapeString(item))
 	}
 	return
+}
+
+func LeftBar() string {
+	return `<div class="well">
+  <table class="table">
+  <thead><tr><th>Keys</th></tr></thead>
+  <tbody>
+  <tr><td>One</td></tr>
+  <tr><td>Two</td></tr>
+  <tr><td>Three</td></tr>
+  </tbody>
+  </table>`
+}
+func ContentArea() string {
+	return "What's Here"
 }
