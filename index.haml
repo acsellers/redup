@@ -1,0 +1,19 @@
+!!! 5
+%html
+  %head
+    %script{:src => "/assets/jquery.js"}
+    %script{:src => "/assets/bootstrap.js"}
+    %script{:src => "/assets/application.js"}
+    %link{:type => "text/css", :rel => "stylesheet", :href => "/assets/bootstrap.css"}
+    %link{:type => "text/css", :rel => "stylesheet", :href => "/assets/application.css"}
+  %body
+    .navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        %a.brand{:href => "/"} REDUP
+        .nav
+          %li Some Key >
+          %li Some Inner Key
+    .row-fluid
+      .well.span12
+        Content
+
