@@ -40,4 +40,27 @@ const (
           %v
         </div>
       </div>`
+
+	KEYCONTENT = `
+    <div class="keycontent" id="key_%v">
+      <h3>%v</h3>
+      <blockquote>%v</blockquote>
+    </div>
+  `
+
+	ERRORCONTENT = `
+    <div class="keycontent" id="key_%v">
+      <h3>%v</h3>
+      <blockquote>%v</blockquote>
+    </div>
+  `
+
+	LISTCONTENTHEAD = `
+    <div class="keycontent" id="key_%v">
+      <h3>%v</h3>
+      <ul>
+  `
+
+	LISTCONTENTTAIL = `
+  </ul></div>`
 )

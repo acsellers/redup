@@ -2,6 +2,7 @@ package main
 
 import "flag"
 import "fmt"
+import "github.com/simonz05/godis/redis"
 import "html"
 import "log"
 import "net/http"
@@ -27,7 +28,7 @@ func AssetHandler(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(w, JQUERYJS)
 	case "/assets/application.js":
 		w.Header().Set("Content-Type", "application/javascript")
-		fmt.Fprint(w, "")
+		fmt.Fprint(w, APPLICATIONJS)
 	case "/assets/application.css":
 		w.Header().Set("Content-Type", "text/css")
 		fmt.Fprint(w, APPLICATIONCSS)
@@ -50,16 +51,67 @@ func NavbarItems(items ...string) (markedUpItems string) {
 }
 
 func LeftBar() string {
-	return `<div class="well">
-  <table class="table">
-  <thead><tr><th>Keys</th></tr></thead>
-  <tbody>
-  <tr><td>One</td></tr>
-  <tr><td>Two</td></tr>
-  <tr><td>Three</td></tr>
-  </tbody>
-  </table>`
+	barHtml := `<div class="well">
+  <table class="table flat-bottom">
+  <thead><tr><th class="all_keys">All Keys</th></tr></thead>
+  <tbody>`
+	keys, err := Conn.Keys("*")
+	if err == nil {
+		for _, key := range keys {
+			barHtml += fmt.Sprintf("<tr><td><a href=\"#\" class=\"key-link\" data-key=\"%v\">%v</a></td></tr>", key, key)
+		}
+		barHtml += "</tbody></table></div>"
+
+		return barHtml
+	}
+	return fmt.Sprintf("<div class=\"well\">%v</div", err)
 }
 func ContentArea() string {
-	return "What's Here"
+	contentArea := ""
+	keys, err := Conn.Keys("*")
+	if err == nil {
+		for _, key := range keys {
+			contentArea += ContentFor(key) + "<hr>"
+		}
+	}
+
+	return contentArea
+}
+
+func ContentFor(key string) string {
+	info, err := Conn.Type(key)
+	if err == nil {
+		switch info {
+		case "string":
+			v, e := Conn.Get(key)
+			if e == nil {
+				return fmt.Sprintf(KEYCONTENT, key, key, v.String())
+			}
+			return fmt.Sprintf(ERRORCONTENT, key, key, e)
+		case "list":
+			list, e := Conn.Lrange(key, 0, -1)
+			if e == nil {
+				return ListContent(key, list)
+			}
+			return fmt.Sprintf(ERRORCONTENT, key, key, e)
+		case "set":
+			list, e := Conn.Smembers(key)
+			if e == nil {
+				return ListContent(key, list)
+			}
+			return fmt.Sprintf(ERRORCONTENT, key, key, e)
+		default:
+			return fmt.Sprintf(KEYCONTENT, key, key, info)
+		}
+	}
+	return fmt.Sprintf(KEYCONTENT, key, key, err)
+}
+
+func ListContent(key string, list *redis.Reply) string {
+	listContent := fmt.Sprintf(LISTCONTENTHEAD, key, key)
+	for _, v := range list.StringArray() {
+		listContent += fmt.Sprintf("<li>%v</li>", v)
+	}
+
+	return listContent + LISTCONTENTTAIL
 }
