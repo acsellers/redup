@@ -31,12 +31,14 @@ html {
       console.log(ev)
       key_val = ev.currentTarget.dataset["key"];
       console.log(key_val);
+      $(".seperator").hide();
       $(".keycontent").hide();
       $(".key-link").removeClass("active");
       $('a[data-key="'+key_val+'"]').addClass("active");
       $("#key_"+key_val).show();
     });
     $(".all_keys").click(function(){
+      $(".seperator").show();
       $(".keycontent").show();
       $(".key-link").removeClass("active");
     });

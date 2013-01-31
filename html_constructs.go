@@ -41,9 +41,17 @@ const (
         </div>
       </div>`
 
+	FULLCONTENT = `
+      <h1 class="page-title">%v</h1>
+      <div class='row-fluid row-shrunk'>
+        <div class='span12'>
+          %v
+        </div>
+      </div>`
+
 	KEYCONTENT = `
     <div class="keycontent" id="key_%v">
-      <h3>%v</h3>
+      <h3><a href="/show/%v">%v</a></h3>
       <blockquote>%v</blockquote>
     </div>
   `
@@ -57,7 +65,7 @@ const (
 
 	LISTCONTENTHEAD = `
     <div class="keycontent" id="key_%v">
-      <h3>%v</h3>
+      <h3><a href="/show/%v">%v</a></h3>
       <ul>
   `
 
