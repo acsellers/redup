@@ -110,7 +110,7 @@ func ContentFor(key string) string {
 func ListContent(key string, list *redis.Reply) string {
 	listContent := fmt.Sprintf(LISTCONTENTHEAD, key, key)
 	for _, v := range list.StringArray() {
-		listContent += fmt.Sprintf("<li>%v</li>", v)
+		listContent += fmt.Sprintf("<li><pre class=\"redis-item\">%s</pre></li>", v)
 	}
 
 	return listContent + LISTCONTENTTAIL

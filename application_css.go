@@ -40,6 +40,14 @@ html {
       $(".keycontent").show();
       $(".key-link").removeClass("active");
     });
+    $(".redis-item").each(function(i,v){
+      try {
+        value = JSON.parse($(v).html());
+        $(v).html(JSON.stringify(value, null, "    "));
+      }
+      catch(e) {
+      }
+    });
   })
   `
 )
