@@ -4,7 +4,6 @@ const (
 	APPLICATIONCSS = `
 html {
   background-color: #e2e2e2;
-  width: 940px;
   margin: 0 auto;
 }
 .row-shrunk {

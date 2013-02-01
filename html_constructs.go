@@ -12,7 +12,7 @@ const (
       <link href='/assets/application.css' rel='stylesheet' type='text/css' />
     </head>
     <body>
-      <div class="container">
+      <div class="container-fluid">
         %v
         %v
       </div>
@@ -33,7 +33,7 @@ const (
 	CONTENT = `
       <h1 class="page-title">%v</h1>
       <div class='row-fluid row-shrunk'>
-        <div class='span3'>
+        <div class='span2'>
           %v
         </div>
         <div class='span9'>
